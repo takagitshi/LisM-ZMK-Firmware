@@ -150,8 +150,8 @@ DT_INST_FOREACH_STATUS_OKAY(ENCODER_KEY_DIVIDER_INST)
 static int encoder_key_divider_layer_state_changed_listener(const zmk_event_t *eh) {
     const struct zmk_layer_state_changed *event = as_zmk_layer_state_changed(eh);
 
-    /* Layer 0 and AML Layer 1 share Volume mode; other layer transitions discard a half-step. */
-    if (event != NULL && event->layer >= 2) {
+    /* Only Layer 0 uses divided Volume; any other layer discards a pending half-step. */
+    if (event != NULL && event->layer >= 1) {
         DT_INST_FOREACH_STATUS_OKAY(RESET_ENCODER_KEY_DIVIDER)
     }
     return ZMK_EV_EVENT_BUBBLE;
