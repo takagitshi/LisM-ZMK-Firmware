@@ -91,7 +91,7 @@
         layer_2 {
             display-name = "2";
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &kp LC(BACKSPACE)
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &kp LG(BACKSPACE)
 &trans  &trans  &trans  &trans  &trans                    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans
 &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans     &trans
 &trans  &trans  &trans  &none   &trans  &trans    &trans  &trans  &none     &trans    &trans     &trans
