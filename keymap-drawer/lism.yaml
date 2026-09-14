@@ -108,7 +108,7 @@ layers:
   - {t: ▽, type: trans}
   - $$mdi:arrow-up-bold$$
   - {t: ▽, type: trans}
-  - {t: 'Ctl+$$mdi:backspace$$', type: backspace}
+  - {t: 'Gui+$$mdi:backspace$$', type: backspace}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
