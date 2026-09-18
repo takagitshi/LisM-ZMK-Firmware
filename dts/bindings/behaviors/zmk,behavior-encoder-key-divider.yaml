@@ -17,3 +17,8 @@ properties:
     type: int
     required: true
     description: Number of consecutive same-direction inputs required for one forwarded key event
+
+  timeout-ms:
+    type: int
+    required: true
+    description: Maximum time between consecutive same-direction inputs

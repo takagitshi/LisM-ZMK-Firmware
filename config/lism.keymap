@@ -35,7 +35,8 @@
             #binding-cells = <1>;
             bindings = <&kp>;
             divisor = <2>;
-            display-name = "Encoder Divided Key Press";
+            timeout-ms = <300>;
+            display-name = "Encoder Two-Step Key Press";
         };
 
         encoder_msc: sensor_rotate_msc {
@@ -46,7 +47,7 @@
             tap-ms = <20>;
         };
 
-        encoder_kp: sensor_rotate_kp {
+        encoder_kp_2step: sensor_rotate_kp_2step {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&encoder_key_divider>, <&encoder_key_divider>;
@@ -72,7 +73,7 @@
                                 &none             &none  &none                                                    &none             &none    &none
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
+            sensor-bindings = <&encoder_kp_2step C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         layer_1 {
@@ -85,7 +86,7 @@
                           &none   &none   &none                     &none   &none     &none
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
+            sensor-bindings = <&encoder_kp_2step C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         layer_2 {
@@ -150,7 +151,7 @@
                     &trans  &trans  &trans                     &trans     &trans            &trans
             >;
 
-            sensor-bindings = <&encoder_none>;
+            sensor-bindings = <&encoder_msc SCRL_UP SCRL_DOWN>;
         };
 
         layer_7 {

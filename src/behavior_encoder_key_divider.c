@@ -22,6 +22,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 struct behavior_encoder_key_divider_config {
     struct zmk_behavior_binding binding;
     uint32_t divisor;
+    uint32_t timeout_ms;
 };
 
 struct behavior_encoder_key_divider_data {
@@ -65,7 +66,8 @@ static int on_encoder_key_divider_pressed(struct zmk_behavior_binding *binding,
         return -EBUSY;
     }
 
-    if (!lism_encoder_divider_state_update(&data->state, binding->param1, cfg->divisor)) {
+    if (!lism_encoder_divider_state_update(&data->state, binding->param1, cfg->divisor,
+                                           event.timestamp, cfg->timeout_ms)) {
         k_spin_unlock(&data->lock, key);
         return ZMK_BEHAVIOR_OPAQUE;
     }
@@ -125,11 +127,14 @@ static const struct behavior_driver_api behavior_encoder_key_divider_driver_api 
     BUILD_ASSERT(DT_INST_PROP_LEN(n, bindings) == 1,                                              \
                  "Encoder key divider requires exactly one binding");                            \
     BUILD_ASSERT(DT_INST_PROP(n, divisor) > 0, "Encoder key divider divisor must be positive");  \
+    BUILD_ASSERT(DT_INST_PROP(n, timeout_ms) > 0,                                                 \
+                 "Encoder key divider timeout must be positive");                                \
     static const struct behavior_encoder_key_divider_config                                       \
         behavior_encoder_key_divider_config_##n = {                                               \
             .binding = {.behavior_dev =                                                           \
                             DEVICE_DT_NAME(DT_INST_PHANDLE_BY_IDX(n, bindings, 0))},               \
             .divisor = DT_INST_PROP(n, divisor),                                                   \
+            .timeout_ms = DT_INST_PROP(n, timeout_ms),                                             \
     };                                                                                             \
     static struct behavior_encoder_key_divider_data behavior_encoder_key_divider_data_##n;        \
     BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, &behavior_encoder_key_divider_data_##n,                 \
@@ -150,8 +155,8 @@ DT_INST_FOREACH_STATUS_OKAY(ENCODER_KEY_DIVIDER_INST)
 static int encoder_key_divider_layer_state_changed_listener(const zmk_event_t *eh) {
     const struct zmk_layer_state_changed *event = as_zmk_layer_state_changed(eh);
 
-    /* Only Layer 0 uses divided Volume; any other layer discards a pending half-step. */
-    if (event != NULL && event->layer >= 1) {
+    /* Layers 0 and 1 share the two-step mode; higher layers discard pending input. */
+    if (event != NULL && event->layer >= 2) {
         DT_INST_FOREACH_STATUS_OKAY(RESET_ENCODER_KEY_DIVIDER)
     }
     return ZMK_EV_EVENT_BUBBLE;

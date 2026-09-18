@@ -1,10 +1,6 @@
 name: Draw ZMK keymaps
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "config/*"
-      - "keymap-drawer/config.yaml"
 
 jobs:
   draw:
@@ -12,7 +8,7 @@ jobs:
     permissions:
       contents: write
     with:
-      commit_message: "[Draw] ${{ github.event.head_commit.message }}"
+      commit_message: "[Draw] Update rendered keymaps"
       amend_commit: false
       install_branch: "main"
       keymap_patterns: "config/*.keymap"

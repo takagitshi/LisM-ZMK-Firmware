@@ -7,44 +7,63 @@
 
 #define UP 1U
 #define DOWN 2U
+#define TIMEOUT_MS 300U
+
+static bool update(struct lism_encoder_divider_state *state, uint32_t direction, int64_t now_ms) {
+    return lism_encoder_divider_state_update(state, direction, 2, now_ms, TIMEOUT_MS);
+}
 
 int main(void) {
     struct lism_encoder_divider_state state;
 
     lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    assert(lism_encoder_divider_state_update(&state, UP, 2));
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    assert(lism_encoder_divider_state_update(&state, UP, 2));
+    assert(!update(&state, UP, 100));
+    assert(update(&state, UP, 400));
+    assert(!state.has_direction && state.count == 0);
+    assert(!update(&state, UP, 500));
+    assert(update(&state, UP, 501));
 
     lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, DOWN, 2));
-    assert(lism_encoder_divider_state_update(&state, DOWN, 2));
+    assert(!update(&state, DOWN, 100));
+    assert(update(&state, DOWN, 399));
+
+    /* A timed-out input becomes the new first input instead of being discarded. */
+    lism_encoder_divider_state_reset(&state);
+    assert(!update(&state, UP, 100));
+    assert(!update(&state, UP, 401));
+    assert(update(&state, UP, 701));
+
+    /* A reversed input becomes the first input in the new direction. */
+    lism_encoder_divider_state_reset(&state);
+    assert(!update(&state, UP, 100));
+    assert(!update(&state, DOWN, 200));
+    assert(update(&state, DOWN, 300));
+    assert(!update(&state, UP, 400));
+    assert(update(&state, UP, 700));
 
     lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    assert(!lism_encoder_divider_state_update(&state, DOWN, 2));
-    assert(lism_encoder_divider_state_update(&state, DOWN, 2));
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    assert(lism_encoder_divider_state_update(&state, UP, 2));
-
-    lism_encoder_divider_state_reset(&state);
-    for (int i = 0; i < 8; i++) {
-        assert(!lism_encoder_divider_state_update(&state, i % 2 == 0 ? UP : DOWN, 2));
+    for (uint32_t i = 0; i < 8; i++) {
+        assert(!update(&state, i % 2 == 0 ? UP : DOWN, i * 10));
     }
 
+    /* A non-monotonic timestamp starts a new pair defensively. */
     lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, UP, 2));
-    assert(lism_encoder_divider_state_update(&state, UP, 2));
+    assert(!update(&state, UP, 200));
+    assert(!update(&state, UP, 100));
+    assert(update(&state, UP, 400));
 
     lism_encoder_divider_state_reset(&state);
-    assert(lism_encoder_divider_state_update(&state, UP, 1));
-    assert(lism_encoder_divider_state_update(&state, DOWN, 1));
+    assert(!update(&state, UP, 100));
+    lism_encoder_divider_state_reset(&state);
+    assert(!update(&state, UP, 200));
+    assert(update(&state, UP, 500));
 
     lism_encoder_divider_state_reset(&state);
-    assert(!lism_encoder_divider_state_update(&state, UP, 0));
+    assert(lism_encoder_divider_state_update(&state, UP, 1, 100, TIMEOUT_MS));
+    assert(lism_encoder_divider_state_update(&state, DOWN, 1, 200, TIMEOUT_MS));
+
+    lism_encoder_divider_state_reset(&state);
+    assert(!lism_encoder_divider_state_update(&state, UP, 0, 100, TIMEOUT_MS));
     assert(!state.has_direction && state.count == 0);
 
     puts("encoder_divider_state_test: PASS");

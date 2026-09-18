@@ -2,10 +2,11 @@
 
 キーマップを SVG で可視化するための設定です。
 
-## 自動生成（GitHub Actions）
+## 手動生成（GitHub Actions）
 
-`config/*` または `keymap-drawer/config.yaml` をpushすると、GitHub Actions が自動的に SVG を生成してコミットします。  
-通常はこちらを使用してください。
+通常のpushでは、実機用firmwareを生成するworkflowだけが自動実行されます。
+
+SVGを更新するときは、GitHubのActions画面で`Draw ZMK keymaps`を選び、`Run workflow`から手動実行してください。生成結果に差分がある場合は、`[Draw] Update rendered keymaps`というcommitで反映されます。
 
 ---
 
