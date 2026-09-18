@@ -13,6 +13,14 @@
 
 &lt { quick-tap-ms = <300>; };
 
+/*
+ * Keep the standard &inc_dec_kp interface so Keymap Editor can edit both keycodes.
+ * Its clockwise/counter-clockwise children add the shared two-step filter.
+ */
+&inc_dec_kp {
+    bindings = <&encoder_key_divider_cw>, <&encoder_key_divider_ccw>;
+};
+
 / {
     macros {
         emoji: emoji_macro {
@@ -30,13 +38,24 @@
     };
 
     behaviors {
-        encoder_key_divider: encoder_key_divider {
+        encoder_key_divider_cw: encoder_key_divider_cw {
             compatible = "zmk,behavior-encoder-key-divider";
             #binding-cells = <1>;
             bindings = <&kp>;
             divisor = <2>;
             timeout-ms = <300>;
-            display-name = "Encoder Two-Step Key Press";
+            direction = <1>;
+            display-name = "Encoder Two-Step Clockwise";
+        };
+
+        encoder_key_divider_ccw: encoder_key_divider_ccw {
+            compatible = "zmk,behavior-encoder-key-divider";
+            #binding-cells = <1>;
+            bindings = <&kp>;
+            divisor = <2>;
+            timeout-ms = <300>;
+            direction = <2>;
+            display-name = "Encoder Two-Step Counter-Clockwise";
         };
 
         encoder_msc: sensor_rotate_msc {
@@ -45,12 +64,6 @@
             bindings = <&msc>, <&msc>;
 
             tap-ms = <20>;
-        };
-
-        encoder_kp_2step: sensor_rotate_kp_2step {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&encoder_key_divider>, <&encoder_key_divider>;
         };
 
         encoder_none: sensor_rotate_none {
@@ -73,7 +86,7 @@
                                 &none             &none  &none                                                    &none             &none    &none
             >;
 
-            sensor-bindings = <&encoder_kp_2step C_VOLUME_UP C_VOLUME_DOWN>;
+            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         layer_1 {
@@ -86,7 +99,7 @@
                           &none   &none   &none                     &none   &none     &none
             >;
 
-            sensor-bindings = <&encoder_kp_2step C_VOLUME_UP C_VOLUME_DOWN>;
+            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
         };
 
         layer_2 {

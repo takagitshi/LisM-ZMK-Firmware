@@ -14,6 +14,8 @@
 #include <zmk/behavior.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/layer_state_changed.h>
+#include <zmk/sensors.h>
+#include <zmk/virtual_key_position.h>
 
 #include <lism/encoder_divider_state.h>
 
@@ -23,14 +25,20 @@ struct behavior_encoder_key_divider_config {
     struct zmk_behavior_binding binding;
     uint32_t divisor;
     uint32_t timeout_ms;
+    uint32_t direction;
 };
 
 struct behavior_encoder_key_divider_data {
-    struct k_spinlock lock;
-    struct lism_encoder_divider_state state;
-    uint32_t forwarded_param;
-    bool forwarded;
+    uint32_t forwarded_param[ZMK_KEYMAP_SENSORS_LEN];
+    bool forwarded[ZMK_KEYMAP_SENSORS_LEN];
 };
+
+struct behavior_encoder_key_divider_shared_data {
+    struct k_spinlock lock;
+    struct lism_encoder_divider_state state[ZMK_KEYMAP_SENSORS_LEN];
+};
+
+static struct behavior_encoder_key_divider_shared_data shared_data;
 
 #if IS_ENABLED(CONFIG_ZMK_BEHAVIOR_METADATA)
 
@@ -58,31 +66,38 @@ static int on_encoder_key_divider_pressed(struct zmk_behavior_binding *binding,
     const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
     const struct behavior_encoder_key_divider_config *cfg = dev->config;
     struct behavior_encoder_key_divider_data *data = dev->data;
-    k_spinlock_key_t key = k_spin_lock(&data->lock);
+    const int sensor_index = ZMK_SENSOR_POSITION_FROM_VIRTUAL_KEY_POSITION(event.position);
 
-    if (data->forwarded) {
-        k_spin_unlock(&data->lock, key);
+    if (sensor_index < 0 || sensor_index >= ZMK_KEYMAP_SENSORS_LEN) {
+        LOG_ERR("Encoder divider received invalid sensor position: %u", event.position);
+        return -EINVAL;
+    }
+
+    k_spinlock_key_t key = k_spin_lock(&shared_data.lock);
+
+    if (data->forwarded[sensor_index]) {
+        k_spin_unlock(&shared_data.lock, key);
         LOG_ERR("Encoder divider received a press before the previous release");
         return -EBUSY;
     }
 
-    if (!lism_encoder_divider_state_update(&data->state, binding->param1, cfg->divisor,
-                                           event.timestamp, cfg->timeout_ms)) {
-        k_spin_unlock(&data->lock, key);
+    if (!lism_encoder_divider_state_update(&shared_data.state[sensor_index], cfg->direction,
+                                           cfg->divisor, event.timestamp, cfg->timeout_ms)) {
+        k_spin_unlock(&shared_data.lock, key);
         return ZMK_BEHAVIOR_OPAQUE;
     }
 
     struct zmk_behavior_binding forwarded_binding = cfg->binding;
     forwarded_binding.param1 = binding->param1;
-    data->forwarded_param = binding->param1;
-    data->forwarded = true;
-    k_spin_unlock(&data->lock, key);
+    data->forwarded_param[sensor_index] = binding->param1;
+    data->forwarded[sensor_index] = true;
+    k_spin_unlock(&shared_data.lock, key);
 
     const int ret = zmk_behavior_invoke_binding(&forwarded_binding, event, true);
     if (ret < 0) {
-        key = k_spin_lock(&data->lock);
-        data->forwarded = false;
-        k_spin_unlock(&data->lock, key);
+        key = k_spin_lock(&shared_data.lock);
+        data->forwarded[sensor_index] = false;
+        k_spin_unlock(&shared_data.lock, key);
         LOG_ERR("Encoder divider key press failed: %d", ret);
         return ret;
     }
@@ -95,17 +110,24 @@ static int on_encoder_key_divider_released(struct zmk_behavior_binding *binding,
     const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
     const struct behavior_encoder_key_divider_config *cfg = dev->config;
     struct behavior_encoder_key_divider_data *data = dev->data;
-    k_spinlock_key_t key = k_spin_lock(&data->lock);
+    const int sensor_index = ZMK_SENSOR_POSITION_FROM_VIRTUAL_KEY_POSITION(event.position);
 
-    if (!data->forwarded) {
-        k_spin_unlock(&data->lock, key);
+    if (sensor_index < 0 || sensor_index >= ZMK_KEYMAP_SENSORS_LEN) {
+        LOG_ERR("Encoder divider received invalid sensor position: %u", event.position);
+        return -EINVAL;
+    }
+
+    k_spinlock_key_t key = k_spin_lock(&shared_data.lock);
+
+    if (!data->forwarded[sensor_index]) {
+        k_spin_unlock(&shared_data.lock, key);
         return ZMK_BEHAVIOR_OPAQUE;
     }
 
     struct zmk_behavior_binding forwarded_binding = cfg->binding;
-    forwarded_binding.param1 = data->forwarded_param;
-    data->forwarded = false;
-    k_spin_unlock(&data->lock, key);
+    forwarded_binding.param1 = data->forwarded_param[sensor_index];
+    data->forwarded[sensor_index] = false;
+    k_spin_unlock(&shared_data.lock, key);
 
     const int ret = zmk_behavior_invoke_binding(&forwarded_binding, event, false);
     if (ret < 0) {
@@ -129,12 +151,15 @@ static const struct behavior_driver_api behavior_encoder_key_divider_driver_api 
     BUILD_ASSERT(DT_INST_PROP(n, divisor) > 0, "Encoder key divider divisor must be positive");  \
     BUILD_ASSERT(DT_INST_PROP(n, timeout_ms) > 0,                                                 \
                  "Encoder key divider timeout must be positive");                                \
+    BUILD_ASSERT(DT_INST_PROP(n, direction) > 0,                                                  \
+                 "Encoder key divider direction must be positive");                              \
     static const struct behavior_encoder_key_divider_config                                       \
         behavior_encoder_key_divider_config_##n = {                                               \
             .binding = {.behavior_dev =                                                           \
                             DEVICE_DT_NAME(DT_INST_PHANDLE_BY_IDX(n, bindings, 0))},               \
             .divisor = DT_INST_PROP(n, divisor),                                                   \
             .timeout_ms = DT_INST_PROP(n, timeout_ms),                                             \
+            .direction = DT_INST_PROP(n, direction),                                               \
     };                                                                                             \
     static struct behavior_encoder_key_divider_data behavior_encoder_key_divider_data_##n;        \
     BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, &behavior_encoder_key_divider_data_##n,                 \
@@ -144,20 +169,18 @@ static const struct behavior_driver_api behavior_encoder_key_divider_driver_api 
 
 DT_INST_FOREACH_STATUS_OKAY(ENCODER_KEY_DIVIDER_INST)
 
-#define RESET_ENCODER_KEY_DIVIDER(inst)                                                           \
-    do {                                                                                           \
-        struct behavior_encoder_key_divider_data *data = DEVICE_DT_INST_GET(inst)->data;          \
-        k_spinlock_key_t key = k_spin_lock(&data->lock);                                           \
-        lism_encoder_divider_state_reset(&data->state);                                            \
-        k_spin_unlock(&data->lock, key);                                                           \
-    } while (false);
-
 static int encoder_key_divider_layer_state_changed_listener(const zmk_event_t *eh) {
     const struct zmk_layer_state_changed *event = as_zmk_layer_state_changed(eh);
 
-    /* Layers 0 and 1 share the two-step mode; higher layers discard pending input. */
+    /* Layers 0 and 1 share volume state. Higher layer transitions, including layer 7 zoom,
+     * discard any pending input so a pair cannot cross between volume and zoom.
+     */
     if (event != NULL && event->layer >= 2) {
-        DT_INST_FOREACH_STATUS_OKAY(RESET_ENCODER_KEY_DIVIDER)
+        k_spinlock_key_t key = k_spin_lock(&shared_data.lock);
+        for (int i = 0; i < ZMK_KEYMAP_SENSORS_LEN; i++) {
+            lism_encoder_divider_state_reset(&shared_data.state[i]);
+        }
+        k_spin_unlock(&shared_data.lock, key);
     }
     return ZMK_EV_EVENT_BUBBLE;
 }

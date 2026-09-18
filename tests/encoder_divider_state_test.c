@@ -41,6 +41,12 @@ int main(void) {
     assert(!update(&state, UP, 400));
     assert(update(&state, UP, 700));
 
+    /* Alternating directions never combine into a completed pair. */
+    lism_encoder_divider_state_reset(&state);
+    assert(!update(&state, UP, 100));
+    assert(!update(&state, DOWN, 200));
+    assert(!update(&state, UP, 300));
+
     lism_encoder_divider_state_reset(&state);
     for (uint32_t i = 0; i < 8; i++) {
         assert(!update(&state, i % 2 == 0 ? UP : DOWN, i * 10));

@@ -22,3 +22,8 @@ properties:
     type: int
     required: true
     description: Maximum time between consecutive same-direction inputs
+
+  direction:
+    type: int
+    required: true
+    description: Direction identifier used with shared state; paired directions must use distinct values

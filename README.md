@@ -20,6 +20,17 @@ DYA Studio対応版は[dya-studio_zmk-v0.4](https://github.com/4mplelab/zmk-conf
 | `lism_right_central_trackball_studio.uf2`     | 右側 セントラル トラックボール (ZMK Studio 対応)   |
 | `settings_reset-seeeduino_xiao_ble-zmk.uf2`   | 設定リセット用                        |
 
+## Keymap Editorで左エンコーダーのキーを変更する
+
+Layer 0、Layer 1、Layer 7の左エンコーダーは、Keymap Editor上では標準の
+`Increment/Decrement Key Press (&inc_dec_kp)` として表示されます。
+エンコーダーを選択し、2つのParametersで右回転と左回転に割り当てるキーを変更してください。
+Behavior自体は変更せず、2つのキーだけを変更します。
+
+これらのレイヤーでは、設定したキーは同方向へ300ms以内に2回回したときに1回だけ出力されます。
+逆方向へ回した場合や300msを超えた場合は、そこから新しい1回目として数え直します。
+Layer 6のスクロールはこの2段階処理の対象外です。
+
 ## ローカルビルド手順
 
 GitHub Actionsでのビルドは毎回2分-3分かかりますが、ローカル環境では40秒〜1分で完了します。(PCスペックによって前後します)  
