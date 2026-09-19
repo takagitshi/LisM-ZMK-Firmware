@@ -15,6 +15,8 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* Keep the fast sensor drain, but pace host reports to 125 Hz. */
+        report-interval-ms = <8>;
     };
 };
 
