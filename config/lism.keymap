@@ -78,6 +78,30 @@
         };
     };
 
+    combos {
+        compatible = "zmk,combos";
+
+        scroll {
+            bindings = <&mo 2>;
+            key-positions = <17 18>;
+        };
+
+        gesture {
+            bindings = <&mo 3>;
+            key-positions = <7 8>;
+        };
+
+        exit_app {
+            bindings = <&kp LG(Q)>;
+            key-positions = <8 9>;
+        };
+
+        log_off {
+            bindings = <&kp LG(LC(Q))>;
+            key-positions = <40 41>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
