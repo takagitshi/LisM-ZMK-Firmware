@@ -11,7 +11,10 @@
     flavor = "balanced";
 };
 
-&lt { quick-tap-ms = <300>; };
+&lt {
+    tapping-term-ms = <300>;
+    quick-tap-ms = <300>;
+};
 
 /*
  * Keep the standard &inc_dec_kp interface so Keymap Editor can edit both keycodes.
@@ -77,7 +80,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "0";
+            display-name = "Base";
             bindings = <
 &kp Q             &kp W         &kp E             &kp R  &kp T                                                    &kp Y             &kp U    &kp I            &kp O      &kp P
 &kp A             &kp S         &kp D             &kp F  &kp G                                                    &kp H             &kp J    &kp K            &kt L      &lt 2 MINUS
@@ -90,12 +93,12 @@
         };
 
         layer_1 {
-            display-name = "1";
+            display-name = "Mouse";
             bindings = <
 &trans            &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans    &trans
 &trans            &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
 &kp LSHIFT        &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans    &trans
-&kp LEFT_COMMAND  &trans  &trans  &none   &trans  &trans    &trans  &trans  &none     &trans    &trans    &trans
+&kp LEFT_COMMAND  &kp LEFT_ALT  &kp LEFT_CONTROL  &none   &kp LEFT_CONTROL  &trans    &trans  &trans  &none     &trans    &trans    &trans
                           &none   &none   &none                     &none   &none     &none
             >;
 
@@ -103,7 +106,7 @@
         };
 
         layer_2 {
-            display-name = "2";
+            display-name = "Scroll";
             bindings = <
 &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &kp UP    &trans     &kp LG(BACKSPACE)
 &trans  &trans  &trans  &trans  &trans                    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans
@@ -116,11 +119,11 @@
         };
 
         layer_3 {
-            display-name = "3";
+            display-name = "Gesture";
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans          &kp LC(UP_ARROW)     &trans           &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &kp LC(LEFT_ARROW)  &trans              &kp LC(RIGHT_ARROW)  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans          &kp LC(DOWN_ARROW)   &trans           &trans
 &trans  &trans  &trans  &none   &trans  &trans    &trans  &trans  &none   &trans  &trans  &trans
                 &none   &none   &none                     &none   &none   &none
             >;
@@ -129,11 +132,11 @@
         };
 
         layer_4 {
-            display-name = "4";
+            display-name = "symbol";
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&kp EXCLAMATION  &kp AT_SIGN     &kp HASH        &kp DOLLAR  &kp PERCENT                    &kp CARET  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&kp LG(LS(N3))   &kp LG(LS(N4))  &kp LG(LS(N5))  &kp LA(A)   &kp LG(LA(S))                  &kp MINUS  &kp EQUAL      &kp SLASH     &kp LEFT_BRACKET      &kp RIGHT_BRACKET
+&trans           &trans          &trans          &trans      &trans                         &trans     &trans         &kp SEMICOLON  &kp SQT               &kp GRAVE
 &trans  &trans  &trans  &none   &trans  &trans    &trans  &trans  &none   &trans  &trans  &trans
                 &none   &none   &none                     &none   &none   &none
             >;
@@ -142,20 +145,20 @@
         };
 
         layer_5 {
-            display-name = "5";
+            display-name = "number";
             bindings = <
-&kp AT_SIGN    &kp EXCLAMATION  &kp DOUBLE_QUOTES  &kp HASH              &kp DOLLAR                               &kp COMMA      &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp PLUS
-&kp PERCENT    &kp LEFT_BRACE   &kp RIGHT_BRACE    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                    &kp PERIOD     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp MINUS
-&kp AMPERSAND  &kp GRAVE        &kp PIPE           &kp LEFT_BRACKET      &kp RIGHT_BRACKET                        &kp NUMBER_0   &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ASTERISK
-&kp TILDE      &kp SQT          &kp CARET          &none                 &trans                 &trans    &trans  &kp BACKSPACE  &none         &kp COLON     &kp EQUAL     &kp SLASH
-                                &none              &none                 &none                                    &none          &none         &none
+&kp F1   &kp F2   &kp F3   &kp F4   &kp F5                     &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp PLUS      &kp MINUS
+&kp F6   &kp F7   &kp F8   &kp F9   &kp F10                    &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp ASTERISK  &kp SLASH
+&kp F11  &kp F12  &trans   &trans   &trans                     &kp NUMBER_0  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp COMMA
+&trans   &trans   &trans   &none    &trans   &trans    &trans  &kp PERIOD    &none         &kp COLON     &kp EQUAL     &kp LA(Y)
+                 &none    &none    &none                       &none         &none         &none
             >;
 
             sensor-bindings = <&encoder_none>;
         };
 
         layer_6 {
-            display-name = "6";
+            display-name = "move";
             bindings = <
 &kp ESCAPE  &trans  &trans  &trans  &trans                     &kp LG(T)  &kp LG(LS(N))     &kp LG(LA(P))     &kp LG(LS(H))  &kp LG(Q)
 &kp TAB     &trans  &trans  &trans  &trans                     &kp HOME   &msc MOVE_Y(-20)  &kp LG(C)         &kp LG(V)      &kp LG(W)
@@ -168,26 +171,26 @@
         };
 
         layer_7 {
-            display-name = "7";
+            display-name = "setting";
             bindings = <
-&kp F1   &kp F2   &kp F3         &kp F4            &kp F5                     &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans        &kp LG(LC(Q))
-&kp F6   &kp F7   &kp F8         &kp F9            &kp F10                    &kp LA(A)             &kp LA(LG(S))         &kp LA(LG(K))         &trans        &trans
-&kp F11  &kp F12  &kp LG(LA(C))  &kp LG(LA(V))     &trans                     &trans                &trans                &trans                &kp LC(UP)    &trans
-&trans   &trans   &trans         &kp LG(NUMBER_0)  &trans   &trans    &trans  &trans                &trans                &trans                &kp LG(DOWN)  &trans
-                  &trans         &trans            &trans                     &trans                &trans                &trans
+&none       &none           &none   &none   &bt BT_CLR                            &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+&none       &none           &none   &none   &none                                 &none         &none         &none         &none         &none
+&sys_reset  &none           &none   &none   &none                                 &none         &none         &none         &none         &sys_reset
+&none       &bt BT_CLR_ALL  &none   &kp LG(NUMBER_0)  &bootloader  &none    &studio_unlock  &bootloader   &none         &none         &none         &none
+                            &trans  &trans  &trans                                      &trans        &trans        &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LG(PLUS) LG(MINUS)>;
         };
 
         layer_8 {
-            display-name = "8";
+            display-name = "User 8";
             bindings = <
-&none       &none           &none   &none   &bt BT_CLR                            &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&none       &none           &none   &none   &none                                 &none         &none         &none         &none         &none
-&sys_reset  &none           &none   &none   &none                                 &none         &none         &none         &none         &sys_reset
-&none       &bt BT_CLR_ALL  &none   &none   &bootloader  &none    &studio_unlock  &bootloader   &none         &none         &none         &none
-                            &trans  &trans  &trans                                &trans        &trans        &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &none   &trans  &trans    &trans  &trans  &none   &trans  &trans  &trans
+                &none   &none   &none                     &none   &none   &none
             >;
 
             sensor-bindings = <&encoder_none>;
