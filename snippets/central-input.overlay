@@ -15,7 +15,7 @@
 
 &zip_temp_layer {
     require-prior-idle-ms = <300>;
-    excluded-positions = <16 17 18 20 31 32 37>;
+    excluded-positions = <16 17 18 20 31 32>;
 };
 
 &gesture_processor {
