@@ -31,6 +31,9 @@ int main(void) {
     assert(update(&state, LISM_GESTURE_AXIS_X, -90, true, 1000) == LISM_GESTURE_LEFT);
 
     lism_gesture_state_reset(&state);
+    assert(update(&state, LISM_GESTURE_AXIS_Y, 90, true, 1000) == LISM_GESTURE_DOWN);
+
+    lism_gesture_state_reset(&state);
     assert(update(&state, LISM_GESTURE_AXIS_X, 45, false, 1000) == LISM_GESTURE_NONE);
     assert(update(&state, LISM_GESTURE_AXIS_Y, 45, true, 1000) == LISM_GESTURE_RIGHT);
 

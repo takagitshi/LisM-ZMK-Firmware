@@ -1,6 +1,6 @@
 layout: {zmk_keyboard: lism}
 layers:
-  '0':
+  Base:
   - Q
   - W
   - E
@@ -20,14 +20,14 @@ layers:
   - J
   - K
   - {t: L, h: toggle}
-  - {t: '-', h: '2'}
+  - {t: '-', h: Scroll}
   - {t: Z, h: '$$mdi:apple-keyboard-shift$$'}
   - X
   - C
   - V
   - B
-  - {t: N, h: '4'}
-  - {t: M, h: '3'}
+  - {t: N, h: symbol}
+  - {t: M, h: Gesture}
   - ','
   - .
   - {t: QUESTION, h: '$$mdi:apple-keyboard-shift$$'}
@@ -36,20 +36,20 @@ layers:
   - $$mdi:apple-keyboard-control$$
   - ''
   - {t: LANGUAGE 2, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: '$$mdi:keyboard-space$$', h: '5'}
-  - {t: '$$mdi:keyboard-return$$', h: '6'}
-  - {t: LANGUAGE 1, h: '2'}
+  - {t: '$$mdi:keyboard-space$$', h: number}
+  - {t: '$$mdi:keyboard-return$$', h: move}
+  - {t: LANGUAGE 1, h: Scroll}
   - ''
-  - {t: ;, h: '7'}
+  - {t: ;, h: setting}
   - Alt+Y
-  - {t: '~', h: '8'}
+  - {t: '~', h: User 8}
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
-  '1':
+  Mouse:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -81,24 +81,24 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - $$mdi:apple-keyboard-command$$
+  - $$mdi:apple-keyboard-option$$
+  - $$mdi:apple-keyboard-control$$
+  - ''
+  - $$mdi:apple-keyboard-control$$
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
-  '2':
+  Scroll:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -147,7 +147,15 @@ layers:
   - ''
   - ''
   - ''
-  '3':
+  Gesture:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - Ctl+$$mdi:arrow-up-bold$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -156,65 +164,9 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - Ctl+$$mdi:arrow-left-bold$$
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  '4':
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - Ctl+$$mdi:arrow-right-bold$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -223,8 +175,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - Ctl+$$mdi:arrow-down-bold$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -245,56 +196,105 @@ layers:
   - ''
   - ''
   - ''
-  '5':
-  - '@'
+  symbol:
   - '!'
-  - '"'
+  - '@'
   - '#'
   - $
-  - ','
+  - '%'
+  - ^
+  - '&'
+  - '*'
+  - (
+  - )
+  - Gui+Sft+3
+  - Gui+Sft+4
+  - Gui+Sft+5
+  - Alt+A
+  - Gui+Alt+S
+  - '-'
+  - '='
+  - /
+  - '['
+  - ']'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - ;
+  - SQT
+  - '`'
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  number:
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
   - '7'
   - '8'
   - '9'
   - +
-  - '%'
-  - '{'
-  - '}'
-  - (
-  - )
-  - PERIOD
+  - '-'
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
   - '4'
   - '5'
   - '6'
-  - '-'
-  - '&'
-  - '`'
-  - '|'
-  - '['
-  - ']'
+  - '*'
+  - /
+  - F11
+  - F12
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - '0'
   - '1'
   - '2'
   - '3'
-  - '*'
-  - '~'
-  - SQT
-  - ^
+  - ','
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - ''
   - {t: ▽, type: trans}
   - {type: held}
   - {t: ▽, type: trans}
-  - {t: '$$mdi:backspace$$', type: backspace}
+  - PERIOD
   - ''
   - ':'
   - '='
-  - /
+  - Alt+Y
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
-  '6':
+  move:
   - $$mdi:keyboard-esc$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -343,56 +343,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  '7':
-  - F1
-  - F2
-  - F3
-  - F4
-  - F5
-  - Gui+Sft+3
-  - Gui+Sft+4
-  - Gui+Sft+5
-  - {t: ▽, type: trans}
-  - Gui+Ctl+Q
-  - F6
-  - F7
-  - F8
-  - F9
-  - F10
-  - Alt+A
-  - Alt+Gui+S
-  - Alt+Gui+K
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - F11
-  - F12
-  - Gui+Alt+C
-  - Gui+Alt+V
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - Ctl+$$mdi:arrow-up-bold$$
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - Gui+0
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
-  - $$mdi:format-vertical-align-bottom$$
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  '8':
+  setting:
   - ''
   - ''
   - ''
@@ -426,18 +377,67 @@ layers:
   - ''
   - BT CLR ALL
   - ''
-  - ''
+  - Gui+0
   - $$mdi:progress-download$$
   - ''
   - $$mdi:lock-open-variant-outline$$
   - $$mdi:progress-download$$
   - ''
-  - ''
-  - ''
   - {type: held}
+  - ''
+  - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  User 8:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''

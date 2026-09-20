@@ -2,8 +2,30 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-自作キーボード LisMのファームウェアです。  
-DYA Studio対応版は[dya-studio_zmk-v0.4](https://github.com/4mplelab/zmk-config-LisM/tree/dya-studio_zmk-v0.4)ブランチから取得できます。
+自作キーボード LisMのファームウェアです。
+
+現在の`main`はDYA Studio固有のZMK fork、Runtime Input Processor、Settings RPC、
+`custom-settings`に依存していません。`_studio`付きの成果物は公式ZMKの標準Studio対応版で、
+GitHub Keymap Editorとは別機能です。通常使用する`_studio`なしの成果物にはStudio機能を含めていません。
+
+## レイヤー構成
+
+ZEN keyboardと同じ役割順を基準に、物理キー数に合わせてLayer 0から8を構成しています。
+
+| Layer | 表示名 | 役割 |
+|---:|---|---|
+| 0 | Base | 通常入力 |
+| 1 | Mouse | Auto Mouse Layerとクリック |
+| 2 | Scroll | トラックボールのスクロールgate |
+| 3 | Gesture | 上下左右4方向の編集可能なGesture action |
+| 4 | symbol | 記号 |
+| 5 | number | 数字・Fキー |
+| 6 | move | 移動・アプリ操作 |
+| 7 | setting | Bluetooth・Reset・Bootloader・Studio Unlock |
+| 8 | User 8 | Keymap Editor用の予備層 |
+
+Gesture actionはLayer 3のI、J、L、カンマ位置にあり、Keymap Editorで通常のキーと同じように
+変更できます。Gesture thresholdはLisMの14mmトラックボール向け調整値90、cooldownは150msです。
 
 ## 生成されるファームウェア一覧
 
@@ -86,7 +108,7 @@ GitHub Actionsでのビルドは毎回2分-3分かかりますが、ローカル
 
     - **すべてのファームウェアを逐次で一度に作成する場合(ZMK Studioサポートあり):**
       ```bash
-      make all
+      make all_studio
       ```
 
     - **作成するファームウェアを選びたい場合:**

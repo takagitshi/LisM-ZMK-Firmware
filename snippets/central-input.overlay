@@ -1,8 +1,7 @@
 /* Shared processing for pointing data received from the peripheral half. */
 &peripheral_listener {
     input-processors =
-        <&gesture_2_processor>,
-        <&gesture_1_processor>,
+        <&gesture_processor>,
         <&zip_temp_layer 1 10000>;
 
     scroller {
@@ -16,14 +15,10 @@
 
 &zip_temp_layer {
     require-prior-idle-ms = <300>;
-    excluded-positions = <16 17 18 19 20 30>;
+    excluded-positions = <16 17 18 20 30 31 32 34>;
 };
 
-&gesture_1_processor {
-    status = "okay";
-};
-
-&gesture_2_processor {
+&gesture_processor {
     status = "okay";
 };
 

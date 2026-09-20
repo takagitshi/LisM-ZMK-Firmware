@@ -26,10 +26,13 @@ struct gesture_processor_config {
     uint8_t index;
     uint8_t layer;
     uint8_t reset_on_layer;
+    uint8_t binding_layer;
+    uint16_t up_position;
+    uint16_t left_position;
+    uint16_t right_position;
+    uint16_t down_position;
     uint32_t threshold;
     uint32_t cooldown_ms;
-    struct zmk_behavior_binding left_binding;
-    struct zmk_behavior_binding right_binding;
 };
 
 struct gesture_processor_data {
@@ -50,9 +53,33 @@ static void reset_all_states(const struct device *dev) {
 }
 
 static void invoke_action(const struct gesture_processor_config *cfg,
-                          const struct zmk_behavior_binding *binding, uint8_t listener_index) {
+                          enum lism_gesture_direction direction, uint8_t listener_index) {
+    uint16_t position;
+    switch (direction) {
+    case LISM_GESTURE_UP:
+        position = cfg->up_position;
+        break;
+    case LISM_GESTURE_LEFT:
+        position = cfg->left_position;
+        break;
+    case LISM_GESTURE_RIGHT:
+        position = cfg->right_position;
+        break;
+    case LISM_GESTURE_DOWN:
+        position = cfg->down_position;
+        break;
+    default:
+        return;
+    }
+    const struct zmk_behavior_binding *binding =
+        zmk_keymap_get_layer_binding_at_idx(cfg->binding_layer, position);
+    if (binding == NULL) {
+        LOG_ERR("Gesture binding missing: layer=%d position=%d", cfg->binding_layer, position);
+        return;
+    }
+
     struct zmk_behavior_binding_event behavior_event = {
-        .layer = cfg->layer,
+        .layer = cfg->binding_layer,
         .position = ZMK_VIRTUAL_KEY_POSITION_BEHAVIOR_INPUT_PROCESSOR(listener_index, cfg->index),
         .timestamp = k_uptime_get(),
 #if IS_ENABLED(CONFIG_ZMK_SPLIT)
@@ -111,10 +138,8 @@ static int gesture_processor_handle_event(const struct device *dev, struct input
     event->value = 0;
     k_mutex_unlock(&data->lock);
 
-    if (direction == LISM_GESTURE_LEFT && zmk_keymap_layer_active(cfg->layer)) {
-        invoke_action(cfg, &cfg->left_binding, processor_state->input_device_index);
-    } else if (direction == LISM_GESTURE_RIGHT && zmk_keymap_layer_active(cfg->layer)) {
-        invoke_action(cfg, &cfg->right_binding, processor_state->input_device_index);
+    if (direction != LISM_GESTURE_NONE && zmk_keymap_layer_active(cfg->layer)) {
+        invoke_action(cfg, direction, processor_state->input_device_index);
     }
 
     return ZMK_INPUT_PROC_STOP;
@@ -132,16 +157,28 @@ static int gesture_processor_init(const struct device *dev) {
 }
 
 #define GESTURE_PROCESSOR_INST(n)                                                                   \
-    BUILD_ASSERT(DT_INST_PROP_LEN(n, bindings) == 2, "Gesture processor requires two bindings");  \
     BUILD_ASSERT(DT_INST_PROP(n, threshold) > 0, "Gesture threshold must be greater than zero");   \
+    BUILD_ASSERT(DT_INST_PROP(n, binding_layer) < ZMK_KEYMAP_LAYERS_LEN,                           \
+                 "Gesture binding layer is outside the keymap");                                  \
+    BUILD_ASSERT(DT_INST_PROP(n, up_position) < ZMK_KEYMAP_LEN,                                   \
+                 "Gesture up position is outside the keymap");                                   \
+    BUILD_ASSERT(DT_INST_PROP(n, left_position) < ZMK_KEYMAP_LEN,                                 \
+                 "Gesture left position is outside the keymap");                                 \
+    BUILD_ASSERT(DT_INST_PROP(n, right_position) < ZMK_KEYMAP_LEN,                                \
+                 "Gesture right position is outside the keymap");                                \
+    BUILD_ASSERT(DT_INST_PROP(n, down_position) < ZMK_KEYMAP_LEN,                                 \
+                 "Gesture down position is outside the keymap");                                 \
     static const struct gesture_processor_config gesture_processor_config_##n = {                  \
         .index = n,                                                                                 \
         .layer = DT_INST_PROP(n, layer),                                                            \
         .reset_on_layer = DT_INST_PROP(n, reset_on_layer),                                          \
+        .binding_layer = DT_INST_PROP(n, binding_layer),                                            \
+        .up_position = DT_INST_PROP(n, up_position),                                                \
+        .left_position = DT_INST_PROP(n, left_position),                                            \
+        .right_position = DT_INST_PROP(n, right_position),                                          \
+        .down_position = DT_INST_PROP(n, down_position),                                            \
         .threshold = DT_INST_PROP(n, threshold),                                                    \
         .cooldown_ms = DT_INST_PROP(n, cooldown_ms),                                                \
-        .left_binding = ZMK_KEYMAP_EXTRACT_BINDING(0, DT_DRV_INST(n)),                              \
-        .right_binding = ZMK_KEYMAP_EXTRACT_BINDING(1, DT_DRV_INST(n)),                             \
     };                                                                                              \
     static struct gesture_processor_data gesture_processor_data_##n;                               \
     DEVICE_DT_INST_DEFINE(n, gesture_processor_init, NULL, &gesture_processor_data_##n,             \
