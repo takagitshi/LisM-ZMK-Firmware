@@ -13,7 +13,7 @@ SVGを更新するときは、GitHubのActions画面で`Draw ZMK keymaps`を選�
 ## ローカルでの実行（Mac）
 
 ローカルで SVG を確認したい場合の手順です。  
-コマンドはすべて **`zmk-config-LisM` フォルダ直下で実行**してください。
+コマンドはすべて **`LisM-ZMK-Firmware` フォルダ直下で実行**してください。
 
 ### インストール
 

@@ -16,6 +16,7 @@ manifest:
       import: app/west.yml
     - name: zmk-driver-paw3222
       remote: takagitshi
+      repo-path: LisM-PAW3222-Driver
       # Signed 12-bit deltas, immediate draining, and paced split reports; pinned.
       revision: 459a14045182c083460f5c4d18bcb10aef0cd506
     - name: zmk-rgbled-widget

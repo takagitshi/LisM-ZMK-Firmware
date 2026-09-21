@@ -2,6 +2,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+> [!IMPORTANT]
+> **通常触るのはこの本体リポジトリです。** キーマップ、レイヤー、ビルド設定、ファームウェアを管理します。
+> [`LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)はLisM内部依存で、通常は直接編集しません。
+
 自作キーボード LisMのファームウェアです。
 
 現在の`main`はDYA Studio固有のZMK fork、Runtime Input Processor、Settings RPC、
@@ -56,7 +60,7 @@ Layer 6のスクロールはこの2段階処理の対象外です。
 ## PAW3222トラックボール
 
 PAW3222ドライバーは、符号付き12bitのX/Y移動量と、MOTIONが続く間の即時読取りに対応した
-[`takagitshi/zmk-driver-paw3222`](https://github.com/takagitshi/zmk-driver-paw3222)の検証済みcommitに固定しています。
+[`takagitshi/LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)の検証済みcommitに固定しています。
 
 `force-awake`は初動遅延を減らす代わりに電池消費が増えるため、標準では有効化していません。
 通常ポインター経路にスムージングや追加加速は入れていません。
