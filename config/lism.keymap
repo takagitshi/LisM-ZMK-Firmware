@@ -43,6 +43,16 @@
     };
 
     behaviors {
+        mouse_lt: mouse_layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <300>;
+            bindings = <&mo>, <&mkp>;
+            display-name = "Mouse Layer-Tap";
+        };
+
         encoder_key_divider_cw: encoder_key_divider_cw {
             compatible = "zmk,behavior-encoder-key-divider";
             #binding-cells = <1>;
