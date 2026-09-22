@@ -17,6 +17,21 @@
         irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         /* Keep the fast sensor drain, but pace host reports to 125 Hz. */
         report-interval-ms = <8>;
+
+        /*
+         * Preserve the current PAW3222 CPI and low-speed response, then add a
+         * continuous same-frame gain curve scaled for the 8 ms report period.
+         * Scroll and Gesture retain raw deltas on their existing layers.
+         */
+        pointer-acceleration;
+        pointer-acceleration-base-gain-milli = <1000>;
+        pointer-acceleration-takeoff-speed = <17>;
+        pointer-acceleration-full-speed = <85>;
+        pointer-acceleration-max-gain-milli = <3000>;
+        pointer-acceleration-reference-interval-ms = <8>;
+        pointer-acceleration-idle-reset-ms = <60>;
+        pointer-acceleration-scroll-layer = <2>;
+        pointer-acceleration-gesture-layer = <3>;
     };
 };
 
