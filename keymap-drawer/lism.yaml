@@ -19,7 +19,7 @@ layers:
   - H
   - J
   - K
-  - {t: L, h: toggle}
+  - L
   - {t: '-', h: Scroll}
   - {t: Z, h: '$$mdi:apple-keyboard-shift$$'}
   - X
