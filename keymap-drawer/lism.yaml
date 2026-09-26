@@ -349,10 +349,10 @@ layers:
   - Gui+-
   - Gui++
   - {t: ▽, type: trans}
-  - Gui+T
-  - Ctl+Sft+$$mdi:keyboard-tab$$
+  - Gui+C
+  - Gui+Alt+C
   - $$mdi:arrow-up-bold$$
-  - Ctl+$$mdi:keyboard-tab$$
+  - Gui+V
   - Gui+W
   - {t: ▽, type: trans}
   - MUTE
@@ -381,10 +381,10 @@ layers:
   - LANGUAGE 2
   - {t: ▽, type: trans}
   - {type: held}
-  - Gui+Sft+N
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - Gui+R
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - Gui+Sft+H
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
