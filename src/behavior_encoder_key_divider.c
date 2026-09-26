@@ -172,8 +172,8 @@ DT_INST_FOREACH_STATUS_OKAY(ENCODER_KEY_DIVIDER_INST)
 static int encoder_key_divider_layer_state_changed_listener(const zmk_event_t *eh) {
     const struct zmk_layer_state_changed *event = as_zmk_layer_state_changed(eh);
 
-    /* Layers 0 and 1 share volume state. Higher layer transitions, including layer 7 zoom,
-     * discard any pending input so a pair cannot cross between volume and zoom.
+    /* Layers 0 and 1 share volume state. Higher layer transitions discard any pending input
+     * so a pair cannot cross between different encoder roles.
      */
     if (event != NULL && event->layer >= 2) {
         k_spinlock_key_t key = k_spin_lock(&shared_data.lock);
