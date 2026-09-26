@@ -109,10 +109,10 @@
         default_layer {
             display-name = "Base";
             bindings = <
-&kp Q         &kp W         &kp E             &kp R  &kp T                                         &kp Y          &kp U  &lt 3 I    &kp O       &kp P
-&kp A         &kp S         &kp D             &kp F  &kp G                                         &kp H          &kp J  &lt 2 K    &kp L       &kp MINUS
-&mt LSHIFT Z  &kp X         &kp C             &kp V  &kp B                                         &kp N          &kp M  &kp COMMA  &kp DOT     &mt RSHIFT QUESTION
-&kp TAB       &kp LEFT_ALT  &kp LEFT_COMMAND  &none  &lt 4 LANGUAGE_1  &lt 5 SPACE    &lt 6 ENTER  &kp BACKSPACE  &none  &kp LCTRL  &kp DELETE  &kp TILDE
+&kp Q         &kp W         &kp E             &kp R  &kp T                                         &kp Y          &kp U  &lt 3 I      &kp O       &kp P
+&kp A         &kp S         &kp D             &kp F  &kp G                                         &kp H          &kp J  &lt 2 K      &kp L       &kp MINUS
+&mt LSHIFT Z  &kp X         &kp C             &kp V  &kp B                                         &kp N          &kp M  &lt 4 COMMA  &kp DOT     &mt RSHIFT QUESTION
+&kp TAB       &kp LEFT_ALT  &kp LEFT_COMMAND  &none  &lt 4 LANGUAGE_1  &lt 5 SPACE    &lt 6 ENTER  &kp BACKSPACE  &none  &kp LCTRL    &kp DELETE  &kp TILDE
                             &none             &none  &none                                         &none          &none  &none
             >;
 
@@ -123,7 +123,7 @@
             display-name = "Mouse";
             bindings = <
 &trans      &trans        &trans            &trans  &trans                    &trans  &trans    &trans           &trans    &trans
-&trans      &trans        &trans            &trans  &trans                    &trans  &mkp MB1  &mouse_lt 2 MB3  &mkp MB2  &trans
+&trans      &trans        &trans            &trans  &trans                    &trans  &mkp MB1  &mouse_lt 2 MB3  &mkp MB2  &kp RIGHT_COMMAND
 &kp LSHIFT  &trans        &trans            &trans  &trans                    &trans  &trans    &trans           &trans    &trans
 &trans      &kp LEFT_ALT  &kp LEFT_COMMAND  &none   &trans  &trans    &trans  &trans  &none     &trans           &trans    &trans
                           &none             &none   &none                     &none   &none     &none
@@ -187,14 +187,14 @@
         layer_6 {
             display-name = "move";
             bindings = <
-&trans  &kp LG(N0)              &kp LG(MINUS)      &kp LG(PLUS)             &trans                            &kp LG(T)      &kp LC(LS(TAB))     &kp UP_ARROW    &kp LC(TAB)          &kp LG(W)
-&trans  &kp K_MUTE              &kp C_VOLUME_DOWN  &kp C_VOLUME_UP          &trans                            &kp LC(A)      &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp LC(E)
-&trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(F))      &kp LA(LC(RIGHT_ARROW))  &trans                            &kp HOME       &kp LG(LEFT_ARROW)  &kp LG(LA(P))   &kp LG(RIGHT_ARROW)  &kp END
-&trans  &trans                  &trans             &trans                   &kp LANGUAGE_2  &trans    &trans  &kp LG(LS(N))  &trans              &trans          &kp LG(R)            &kp LG(LS(H))
-                                &trans             &trans                   &trans                            &trans         &trans              &trans
+&trans  &kp LG(N0)              &kp LG(MINUS)      &kp LG(PLUS)             &trans                            &kp LG(C)  &kp LG(LA(C))       &kp UP_ARROW    &kp LG(V)            &kp LG(W)
+&trans  &kp K_MUTE              &kp C_VOLUME_DOWN  &kp C_VOLUME_UP          &trans                            &kp LC(A)  &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp LC(E)
+&trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(F))      &kp LA(LC(RIGHT_ARROW))  &trans                            &kp HOME   &kp LG(LEFT_ARROW)  &kp LG(LA(P))   &kp LG(RIGHT_ARROW)  &kp END
+&trans  &trans                  &trans             &trans                   &kp LANGUAGE_2  &trans    &trans  &kp LG(R)  &trans              &trans          &trans               &kp LG(LS(H))
+                                &trans             &trans                   &trans                            &trans     &trans              &trans
             >;
 
-            sensor-bindings = <&encoder_msc SCRL_UP SCRL_DOWN>;
+            sensor-bindings = <&encoder_none>;
         };
 
         layer_7 {
