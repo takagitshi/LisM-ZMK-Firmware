@@ -8,7 +8,7 @@ layers:
   - T
   - Y
   - U
-  - I
+  - {t: I, h: Gesture 1}
   - O
   - P
   - A
@@ -18,31 +18,31 @@ layers:
   - G
   - H
   - J
-  - K
+  - {t: K, h: Scroll}
   - L
-  - {t: '-', h: Scroll}
+  - '-'
   - {t: Z, h: '$$mdi:apple-keyboard-shift$$'}
   - X
   - C
   - V
   - B
-  - {t: N, h: symbol}
-  - {t: M, h: Gesture}
-  - ','
+  - N
+  - M
+  - {t: ',', h: Gesture 2}
   - .
   - {t: QUESTION, h: '$$mdi:apple-keyboard-shift$$'}
-  - $$mdi:apple-keyboard-command$$
+  - $$mdi:keyboard-tab$$
   - $$mdi:apple-keyboard-option$$
-  - $$mdi:apple-keyboard-control$$
+  - $$mdi:apple-keyboard-command$$
   - ''
-  - {t: LANGUAGE 2, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: LANGUAGE 1, h: symbol}
   - {t: '$$mdi:keyboard-space$$', h: number}
   - {t: '$$mdi:keyboard-return$$', h: move}
-  - {t: LANGUAGE 1, h: Scroll}
+  - {t: '$$mdi:backspace$$', type: backspace}
   - ''
-  - {t: ;, h: setting}
-  - Alt+Y
-  - {t: '~', h: User 8}
+  - $$mdi:apple-keyboard-control$$
+  - $$mdi:backspace-reverse-outline$$
+  - '~'
   - ''
   - ''
   - ''
@@ -67,9 +67,9 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - $$mdi:mouse-left-click-outline$$
-  - $$mdi:mouse-scroll-wheel$$
+  - {t: '$$mdi:mouse-scroll-wheel$$', h: Scroll}
   - $$mdi:mouse-right-click-outline$$
-  - {t: ▽, type: trans}
+  - $$mdi:apple-keyboard-command$$
   - $$mdi:apple-keyboard-shift$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -80,11 +80,11 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - $$mdi:apple-keyboard-command$$
+  - {t: ▽, type: trans}
   - $$mdi:apple-keyboard-option$$
-  - $$mdi:apple-keyboard-control$$
+  - $$mdi:apple-keyboard-command$$
   - ''
-  - $$mdi:apple-keyboard-control$$
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -106,18 +106,16 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - $$mdi:arrow-up-bold$$
-  - {t: ▽, type: trans}
-  - {t: 'Gui+$$mdi:backspace$$', type: backspace}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - $$mdi:arrow-left-bold$$
-  - $$mdi:arrow-down-bold$$
-  - $$mdi:arrow-right-bold$$
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - {type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -132,22 +130,24 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
-  Gesture:
+  Gesture 1:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -155,7 +155,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - Ctl+$$mdi:arrow-up-bold$$
+  - {t: 'Ctl+$$mdi:arrow-up-bold$$', type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -174,8 +174,57 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - Ctl+$$mdi:arrow-down-bold$$
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  Gesture 2:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - Gui+T
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - Ctl+Sft+$$mdi:keyboard-tab$$
+  - {t: ▽, type: trans}
+  - Ctl+$$mdi:keyboard-tab$$
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: Gui+Sft+N, type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -219,20 +268,20 @@ layers:
   - ']'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
+  - Gui+Alt+C
+  - Gui+Alt+V
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {type: held}
   - {t: ▽, type: trans}
   - ;
   - SQT
   - '`'
-  - {t: ▽, type: trans}
+  - $$mdi:keyboard-esc$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - {type: held}
+  - setting
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
@@ -271,22 +320,22 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - '0'
   - '1'
   - '2'
   - '3'
   - ','
+  - '='
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - ''
   - {t: ▽, type: trans}
   - {type: held}
-  - {t: ▽, type: trans}
   - PERIOD
+  - '0'
   - ''
+  - {t: ▽, type: trans}
   - ':'
-  - '='
   - Alt+Y
   - ''
   - ''
@@ -295,48 +344,48 @@ layers:
   - ''
   - ''
   move:
-  - $$mdi:keyboard-esc$$
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - Gui+0
+  - Gui+-
+  - Gui++
   - {t: ▽, type: trans}
   - Gui+T
-  - Gui+Sft+N
-  - Gui+Alt+P
-  - Gui+Sft+H
-  - Gui+Q
-  - $$mdi:keyboard-tab$$
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - HOME
-  - '&msc MOVE_Y(-20)'
-  - Gui+C
-  - Gui+V
+  - Ctl+Sft+$$mdi:keyboard-tab$$
+  - $$mdi:arrow-up-bold$$
+  - Ctl+$$mdi:keyboard-tab$$
   - Gui+W
   - {t: ▽, type: trans}
+  - MUTE
+  - VOLUME DOWN
+  - VOLUME UP
   - {t: ▽, type: trans}
+  - Ctl+A
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-down-bold$$
+  - $$mdi:arrow-right-bold$$
+  - Ctl+E
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - END
-  - '&msc MOVE_Y(20)'
-  - F18
+  - Alt+Ctl+$$mdi:arrow-left-bold$$
   - Alt+Ctl+F
-  - Gui+R
+  - Alt+Ctl+$$mdi:arrow-right-bold$$
+  - {t: ▽, type: trans}
+  - HOME
+  - Gui+$$mdi:arrow-left-bold$$
+  - Gui+Alt+P
+  - Gui+$$mdi:arrow-right-bold$$
+  - END
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - $$mdi:backspace-reverse-outline$$
+  - LANGUAGE 2
   - {t: ▽, type: trans}
   - {type: held}
+  - Gui+Sft+N
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - Ctl+Alt+$$mdi:arrow-left-bold$$
-  - Ctl+$$mdi:arrow-down-bold$$
-  - Ctl+Alt+$$mdi:arrow-right-bold$$
+  - Gui+R
+  - Gui+Sft+H
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -344,11 +393,11 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   setting:
+  - OUT BLE
+  - OUT USB
   - ''
   - ''
   - ''
-  - ''
-  - BT CLR
   - {h: '1', s: '$$mdi:bluetooth-connect$$'}
   - {h: '2', s: '$$mdi:bluetooth-connect$$'}
   - {h: '3', s: '$$mdi:bluetooth-connect$$'}
@@ -364,7 +413,12 @@ layers:
   - ''
   - ''
   - ''
-  - {t: '$$mdi:backup-restore$$', type: bootloader}
+  - ''
+  - ''
+  - ''
+  - ''
+  - $$mdi:progress-download$$
+  - $$mdi:progress-download$$
   - ''
   - ''
   - ''
@@ -373,26 +427,21 @@ layers:
   - ''
   - ''
   - ''
-  - {t: '$$mdi:backup-restore$$', type: bootloader}
+  - {type: held}
+  - {type: held}
+  - $$mdi:lock-open-variant-outline$$
   - ''
+  - ''
+  - ''
+  - BT CLR
   - BT CLR ALL
   - ''
-  - Gui+0
-  - $$mdi:progress-download$$
-  - ''
-  - $$mdi:lock-open-variant-outline$$
-  - $$mdi:progress-download$$
-  - ''
-  - {type: held}
   - ''
   - ''
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  User 8:
+  - ''
+  - ''
+  - ''
+  User 9:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -434,10 +483,15 @@ layers:
   - ''
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - ''
   - ''
   - ''
   - ''
   - ''
   - ''
+combos:
+- p: [8, 9]
+  k: Gui+Q
+- p: [40, 41]
+  k: Gui+Ctl+Q
