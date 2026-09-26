@@ -162,6 +162,21 @@
         reset-on-layer = <2>;
     };
 
+    gesture_2_processor: gesture_2_processor {
+        compatible = "zmk,input-processor-gesture";
+        #input-processor-cells = <0>;
+        status = "disabled";
+        layer = <4>;
+        binding-layer = <4>;
+        up-position = <7>;
+        left-position = <16>;
+        right-position = <18>;
+        down-position = <27>;
+        threshold = <90>;
+        cooldown-ms = <150>;
+        reset-on-layer = <2>;
+    };
+
     // ペリフェラル->セントラルのためのリスナー
     peripheral_listener: peripheral_listener {
         compatible = "zmk,input-listener";

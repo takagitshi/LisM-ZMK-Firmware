@@ -14,22 +14,29 @@ GitHub Keymap Editorとは別機能です。通常使用する`_studio`なしの
 
 ## レイヤー構成
 
-ZEN keyboardと同じ役割順を基準に、物理キー数に合わせてLayer 0から8を構成しています。
+ZEN keyboardと同じ役割順を基準に、物理キー数に合わせてLayer 0から9を構成しています。
 
 | Layer | 表示名 | 役割 |
 |---:|---|---|
 | 0 | Base | 通常入力 |
 | 1 | Mouse | Auto Mouse Layerとクリック |
 | 2 | Scroll | トラックボールのスクロールgate |
-| 3 | Gesture | 上下左右4方向の編集可能なGesture action |
-| 4 | symbol | 記号 |
-| 5 | number | 数字・Fキー |
-| 6 | move | 移動・アプリ操作 |
-| 7 | setting | Bluetooth・Reset・Bootloader・Studio Unlock |
-| 8 | User 8 | Keymap Editor用の予備層 |
+| 3 | Gesture 1 | 上下左右4方向の編集可能なGesture action |
+| 4 | Gesture 2 | タブ・ウインドウ操作用の編集可能なGesture action |
+| 5 | symbol | 記号 |
+| 6 | number | 数字・Fキー |
+| 7 | move | 移動・アプリ操作 |
+| 8 | setting | Bluetooth・Reset・Bootloader・Studio Unlock |
+| 9 | User 9 | Keymap Editor用の予備層 |
 
-Gesture actionはLayer 3のI、J、L、カンマ位置にあり、Keymap Editorで通常のキーと同じように
-変更できます。Gesture thresholdはLisMの14mmトラックボール向け調整値90、cooldownは150msです。
+Gesture actionはLayer 3と4のI、J、L、カンマ位置にあり、Keymap Editorで通常のキーと同じように
+変更できます。Gesture 2の初期割当は上Command+T、左Control+Shift+Tab、右Control+Tab、
+下Command+Shift+Nです。Baseのカンマは短押しカンマ、長押しGesture 2として動作します。
+Gesture thresholdはLisMの14mmトラックボール向け調整値90、cooldownは150msです。
+
+Mouse LayerではMB1、MB3、MB2の右隣に右Commandを配置しています。AMLの解除除外位置は
+Mouse Layerの実際の非transparent / 非none bindingから検査時に導出するため、Keymap Editorで
+編集したあとに固定リストだけが古くなる状態を検出できます。
 
 ## 生成されるファームウェア一覧
 
@@ -48,14 +55,14 @@ Gesture actionはLayer 3のI、J、L、カンマ位置にあり、Keymap Editor�
 
 ## Keymap Editorで左エンコーダーのキーを変更する
 
-Layer 0、Layer 1、Layer 7の左エンコーダーは、Keymap Editor上では標準の
+Layer 0とLayer 1の左エンコーダーは、Keymap Editor上では標準の
 `Increment/Decrement Key Press (&inc_dec_kp)` として表示されます。
 エンコーダーを選択し、2つのParametersで右回転と左回転に割り当てるキーを変更してください。
 Behavior自体は変更せず、2つのキーだけを変更します。
 
 これらのレイヤーでは、設定したキーは同方向へ300ms以内に2回回したときに1回だけ出力されます。
 逆方向へ回した場合や300msを超えた場合は、そこから新しい1回目として数え直します。
-Layer 6のスクロールはこの2段階処理の対象外です。
+Layer 7のスクロールはこの2段階処理の対象外です。
 
 ## PAW3222トラックボール
 
@@ -63,10 +70,18 @@ PAW3222ドライバーは、符号付き12bitのX/Y移動量と、MOTIONが続�
 [`takagitshi/LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)の検証済みcommitに固定しています。
 
 `force-awake`は初動遅延を減らす代わりに電池消費が増えるため、標準では有効化していません。
-通常ポインター経路にスムージングや追加加速は入れていません。
+右Centralの通常Pointerだけは実機合格済みの同一frame加速を使います。Scroll、Gesture 1、
+Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経路も従来どおりです。
 左右どちらのトラックボールも、センサーを即時読取りしつつ差分を8ms単位で集約し、
 最大125Hz相当で報告します。左Peripheral側はBLE通知バッファも10へ増やし、送信詰まりによる
 移動量の欠落を抑えています。
+
+右CentralのLayer LEDは既存widget paletteだけを使用し、Layer 0から順に消灯、白、緑、黄、
+マゼンタ、青、緑、シアン、赤、黄です。Mouse Layer 1は白、setting Layer 8は赤です。
+
+`scripts/verify-lism-config.py`は10層の役割、48 slot、Gesture 1 / 2 processor、レイヤー番号参照、
+encoderの役割、LED配色、PAW3222 / RGB widget pinを検査します。Gesture actionやGesture 2入口の
+物理位置は固定せず、Keymap Editorで変更可能な通常bindingとして保護します。
 
 ## ローカルビルド手順
 
