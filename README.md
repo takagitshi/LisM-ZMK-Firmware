@@ -81,8 +81,9 @@ Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経�
 マゼンタ、青、緑、シアン、赤、黄です。Mouse Layer 1は白、setting Layer 8は赤です。
 
 `scripts/verify-lism-config.py`は10層の役割、48 slot、Gesture 1 / 2 processor、レイヤー番号参照、
-encoderの役割、LED配色、PAW3222 / RGB widget pinを検査します。Gesture actionやGesture 2入口の
-物理位置は固定せず、Keymap Editorで変更可能な通常bindingとして保護します。
+Base / Mouseの2段階encoder、LED配色、PAW3222 / RGB widget pinを検査します。4方向slotは
+I / J / L / カンマ位置を使用し、各actionの内容とGesture 2入口はKeymap Editorで変更可能な
+通常bindingとして保護します。
 
 ## ローカルビルド手順
 
