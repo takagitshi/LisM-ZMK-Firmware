@@ -109,11 +109,11 @@
         default_layer {
             display-name = "Base";
             bindings = <
-&kp Q         &kp W         &kp E             &kp R  &kp T                                              &kp Y            &kp U  &lt 3 I      &kp O       &kp P
-&kp A         &kp S         &kp D             &kp F  &kp G                                              &kp H            &kp J  &lt 2 K      &kp L       &kp MINUS
-&mt LSHIFT Z  &kp X         &kp C             &kp V  &kp B                                              &kp N            &kp M  &lt 4 COMMA  &kp DOT     &mt RSHIFT QUESTION
-&kp TAB       &kp LEFT_ALT  &kp LEFT_COMMAND  &none  &lt 5 SPACE  &lt 6 LANGUAGE_2    &lt 7 LANGUAGE_1  &mt LCTRL ENTER  &none  &none        &kp DELETE  &kp BACKSPACE
-                            &none             &none  &none                                              &none            &none  &none
+&kp Q         &kp W         &kp E             &kp R  &kp T                                         &kp Y                 &kp U  &lt 3 I      &kp O       &kp P
+&kp A         &kp S         &kp D             &kp F  &kp G                                         &kp H                 &kp J  &lt 2 K      &kp L       &kp MINUS
+&mt LSHIFT Z  &kp X         &kp C             &kp V  &kp B                                         &kp N                 &kp M  &lt 4 COMMA  &kp DOT     &mt RSHIFT QUESTION
+&kp TAB       &kp LEFT_ALT  &kp LEFT_COMMAND  &none  &lt 5 LANGUAGE_2  &lt 6 SPACE    &lt 7 ENTER  &mt LCTRL LANGUAGE_1  &none  &none        &kp DELETE  &kp BACKSPACE
+                            &none             &none  &none                                         &none                 &none  &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOLUME_DOWN>;
