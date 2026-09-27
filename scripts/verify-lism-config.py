@@ -104,10 +104,12 @@ def main() -> int:
             require(behavior not in {"&trans", "&none"},
                     f"Gesture layer {layer_index} action slot {position} is empty")
 
-    base_text = " ".join(layer_bindings[0])
-    require("&lt 5 LANGUAGE_1" in base_text and "&lt 6 SPACE" in base_text
-            and "&lt 7 ENTER" in base_text,
-            "Symbol/Number/Move layer-taps did not move with their roles")
+    for layer_id, role in ((5, "Symbol"), (6, "Number"), (7, "Move")):
+        require(
+            any(re.match(rf"&(?:lt|mo)\s+{layer_id}\b", item)
+                for item in layer_bindings[0]),
+            f"{role} layer {layer_id} must remain reachable from Base",
+        )
     require(any(item == "&mo 8" for item in layer_bindings[5]),
             "Symbol-to-setting binding did not move with setting")
 
@@ -147,7 +149,14 @@ def main() -> int:
         "central trackball transform/Gesture 2/Gesture 1/AML order changed",
     )
     for fragment in (
-        "report-interval-ms = <8>;", "pointer-acceleration-scroll-layer = <2>;",
+        "report-interval-ms = <8>;", "pointer-acceleration;",
+        "pointer-acceleration-base-gain-milli = <500>;",
+        "pointer-acceleration-takeoff-speed = <17>;",
+        "pointer-acceleration-full-speed = <85>;",
+        "pointer-acceleration-max-gain-milli = <3000>;",
+        "pointer-acceleration-reference-interval-ms = <8>;",
+        "pointer-acceleration-idle-reset-ms = <60>;",
+        "pointer-acceleration-scroll-layer = <2>;",
         "pointer-acceleration-gesture-layer = <3>;",
         "pointer-acceleration-gesture-layer-2 = <4>;",
         "<&zip_scroll_scaler 1 16>",

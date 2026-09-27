@@ -71,8 +71,11 @@ PAW3222ドライバーは、符号付き12bitのX/Y移動量と、MOTIONが続�
 [`takagitshi/LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)の検証済みcommitに固定しています。
 
 `force-awake`は初動遅延を減らす代わりに電池消費が増えるため、標準では有効化していません。
-右Centralの通常Pointerだけは実機合格済みの同一frame加速を使います。Scroll、Gesture 1、
-Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経路も従来どおりです。
+右Centralの通常PointerだけはZENと同じ同一frame加速方式を使います。19mmトラックボール向けに
+低速域を0.5倍から開始し、LisM固有の8ms周期に合わせた速度17から加速、速度85で出力速度の
+傾きが最大gainへ達します。実効倍率は速度85で約1.5倍、170で約2.25倍となり、上限は3.0倍です。
+Scroll、Gesture 1、Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経路も
+従来どおりです。
 左右どちらのトラックボールも、センサーを即時読取りしつつ差分を8ms単位で集約し、
 最大125Hz相当で報告します。左Peripheral側はBLE通知バッファも10へ増やし、送信詰まりによる
 移動量の欠落を抑えています。
@@ -83,7 +86,8 @@ Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経�
 `scripts/verify-lism-config.py`は10層の役割、48 slot、Gesture 1 / 2 processor、レイヤー番号参照、
 Base / Mouseの2段階encoder、LED配色、PAW3222 / RGB widget pinを検査します。4方向slotは
 I / J / L / カンマ位置を使用し、各actionの内容とGesture 2入口はKeymap Editorで変更可能な
-通常bindingとして保護します。
+通常bindingとして保護します。BaseのSymbol / Number / Move入口は移動先レイヤー番号だけを
+検査し、Keymap Editorで変更するtap側のキーコードやLayer-Tap / Momentaryの選択は固定しません。
 
 ## ローカルビルド手順
 
