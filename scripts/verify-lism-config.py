@@ -51,6 +51,7 @@ def main() -> int:
     dtsi = read("boards/shields/lism/lism.dtsi")
     central_input = read("snippets/central-input.overlay")
     trackball_central = read("snippets/trackball-central/trackball.overlay")
+    trackball_peripheral = read("snippets/trackball-peripheral/trackball.overlay")
     right_conf = read("config/lism_right.conf")
     west = read("config/west.yml")
     build_matrix = read("build.yaml")
@@ -141,25 +142,56 @@ def main() -> int:
         "<&zip_temp_layer110000>;" in normalized_shared,
         "peripheral trackball Gesture 2/Gesture 1/AML order changed",
     )
+    require("<&zip_scroll_scaler 1 16>" in central_input,
+            "peripheral trackball Scroll sensitivity changed")
+    require("report-interval-ms = <8>;" in trackball_peripheral,
+            "peripheral trackball report interval changed")
+    for unexpected in ("res-cpi", "pointer-acceleration"):
+        require(unexpected not in trackball_peripheral,
+                f"peripheral trackball unexpectedly contains {unexpected}")
+
+    for label, layer_id in (
+        ("central_gesture_processor", 3),
+        ("central_gesture_2_processor", 4),
+    ):
+        processor = re.search(
+            rf"{label}:\s*{label}\s*\{{(?P<body>.*?)\n\s*\}};",
+            trackball_central,
+            re.DOTALL,
+        )
+        require(processor is not None, f"{label} node is missing")
+        body = processor.group("body")
+        for fragment in (
+            f"layer = <{layer_id}>;", f"binding-layer = <{layer_id}>;",
+            "up-position = <7>;", "left-position = <16>;",
+            "right-position = <18>;", "down-position = <27>;",
+            "threshold = <107>;", "cooldown-ms = <150>;", "reset-on-layer = <2>;",
+        ):
+            require(fragment in body, f"{label} contract missing: {fragment}")
+
     normalized_central = re.sub(r"\s+", "", trackball_central)
     require(
         "input-processors=<&zip_xy_transform(INPUT_TRANSFORM_X_INVERT|"
-        "INPUT_TRANSFORM_Y_INVERT)>,<&gesture_2_processor>,<&gesture_processor>,"
+        "INPUT_TRANSFORM_Y_INVERT)>,<&central_gesture_2_processor>,"
+        "<&central_gesture_processor>,"
         "<&zip_temp_layer110000>;" in normalized_central,
         "central trackball transform/Gesture 2/Gesture 1/AML order changed",
     )
     for fragment in (
-        "report-interval-ms = <8>;", "pointer-acceleration;",
+        "res-cpi = <1216>;", "report-interval-ms = <8>;", "pointer-acceleration;",
         "pointer-acceleration-base-gain-milli = <1000>;",
-        "pointer-acceleration-takeoff-speed = <17>;",
-        "pointer-acceleration-full-speed = <85>;",
+        "pointer-acceleration-precision-gain-milli = <658>;",
+        "pointer-acceleration-precision-speed = <8>;",
+        "pointer-acceleration-precision-full-speed = <17>;",
+        "pointer-acceleration-takeoff-speed = <20>;",
+        "pointer-acceleration-full-speed = <102>;",
         "pointer-acceleration-max-gain-milli = <3000>;",
         "pointer-acceleration-reference-interval-ms = <8>;",
         "pointer-acceleration-idle-reset-ms = <60>;",
         "pointer-acceleration-scroll-layer = <2>;",
         "pointer-acceleration-gesture-layer = <3>;",
         "pointer-acceleration-gesture-layer-2 = <4>;",
-        "<&zip_scroll_scaler 1 16>",
+        "<&zip_scroll_scaler 1 19>",
     ):
         require(fragment in trackball_central, f"LisM trackball contract missing: {fragment}")
 
@@ -175,7 +207,7 @@ def main() -> int:
     ):
         require(fragment in right_conf, f"right Central setting changed: {fragment}")
 
-    require("revision: d24c1b8edd3dc09c1535ed0e32e336319f8dc9fc" in west,
+    require("revision: 616f9d2cdedca4c1e453f340d9fa7ffccfe57ac1" in west,
             "PAW3222 dual-Gesture driver is not pinned")
     require("revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b" in west,
             "validated RGB widget palette revision is not pinned")

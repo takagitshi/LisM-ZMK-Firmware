@@ -2,6 +2,35 @@
     chosen {
         zmk,kscan = &kscan1;
     };
+
+    /* Keep the left Peripheral at its established threshold 90. */
+    central_gesture_processor: central_gesture_processor {
+        compatible = "zmk,input-processor-gesture";
+        #input-processor-cells = <0>;
+        layer = <3>;
+        binding-layer = <3>;
+        up-position = <7>;
+        left-position = <16>;
+        right-position = <18>;
+        down-position = <27>;
+        threshold = <107>;
+        cooldown-ms = <150>;
+        reset-on-layer = <2>;
+    };
+
+    central_gesture_2_processor: central_gesture_2_processor {
+        compatible = "zmk,input-processor-gesture";
+        #input-processor-cells = <0>;
+        layer = <4>;
+        binding-layer = <4>;
+        up-position = <7>;
+        left-position = <16>;
+        right-position = <18>;
+        down-position = <27>;
+        threshold = <107>;
+        cooldown-ms = <150>;
+        reset-on-layer = <2>;
+    };
 };
 
 #include "../central-input.overlay"
@@ -15,18 +44,22 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        res-cpi = <1216>;
         /* Keep the fast sensor drain, but pace host reports to 125 Hz. */
         report-interval-ms = <8>;
 
         /*
-         * Start low-speed motion at 1.0x after the 0.5x hardware test, then
-         * use a continuous same-frame gain curve scaled for LisM's 8 ms report period.
-         * Scroll and Gesture retain raw deltas on their existing layers.
+         * Use 0.658x only for fine motion, recover to 1.0x before the main
+         * acceleration curve, and scale speed thresholds for 1216 CPI.
+         * Scroll and Gesture bypass acceleration and compensate raw CPI below.
          */
         pointer-acceleration;
         pointer-acceleration-base-gain-milli = <1000>;
-        pointer-acceleration-takeoff-speed = <17>;
-        pointer-acceleration-full-speed = <85>;
+        pointer-acceleration-precision-gain-milli = <658>;
+        pointer-acceleration-precision-speed = <8>;
+        pointer-acceleration-precision-full-speed = <17>;
+        pointer-acceleration-takeoff-speed = <20>;
+        pointer-acceleration-full-speed = <102>;
         pointer-acceleration-max-gain-milli = <3000>;
         pointer-acceleration-reference-interval-ms = <8>;
         pointer-acceleration-idle-reset-ms = <60>;
@@ -47,15 +80,15 @@
     device = <&trackball_central>;
     input-processors =
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&gesture_2_processor>,
-        <&gesture_processor>,
+        <&central_gesture_2_processor>,
+        <&central_gesture_processor>,
         <&zip_temp_layer 1 10000>;
 
     scroller {
         layers = <2>;
         input-processors =
             <&zip_xy_to_scroll_mapper>,
-            <&zip_scroll_scaler 1 16>;
+            <&zip_scroll_scaler 1 19>;
         process-next;
     };
 };

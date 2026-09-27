@@ -71,11 +71,13 @@ PAW3222ドライバーは、符号付き12bitのX/Y移動量と、MOTIONが続�
 [`takagitshi/LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)の検証済みcommitに固定しています。
 
 `force-awake`は初動遅延を減らす代わりに電池消費が増えるため、標準では有効化していません。
-右Centralの通常PointerだけはZENと同じ同一frame加速方式を使います。19mmトラックボールで
-0.5倍開始が遅すぎた実機結果を受け、低速域を1.0倍へ戻しました。LisM固有の8ms周期に合わせた
-速度17から加速し、速度85で出力速度の傾きが最大gainへ達し、上限は3.0倍です。
-Scroll、Gesture 1、Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経路も
-従来どおりです。
+右Centralは19mmトラックボール向けにPAW3222を1216 CPIとし、ZENと同じ同一frame加速方式を
+使います。速度8までは細かな位置合わせ用の0.658倍、速度17までに1.0倍へ連続復帰し、速度20
+から通常加速を開始します。速度102で出力速度の傾きが最大gainへ達し、上限は3.0倍です。
+Scroll、Gesture 1、Gesture 2は加速を迂回してraw deltaを受けます。右CentralだけはCPI増加を
+相殺するため、PAW3222の初期値1026 CPIから1216 CPIへの比率に合わせてScrollを1/19、
+Gestureしきい値を107とし、従来に近い物理感度を維持します。
+左Peripheralは従来のsensor設定、Scroll 1/16、Gestureしきい値90、送信経路を変更しません。
 左右どちらのトラックボールも、センサーを即時読取りしつつ差分を8ms単位で集約し、
 最大125Hz相当で報告します。左Peripheral側はBLE通知バッファも10へ増やし、送信詰まりによる
 移動量の欠落を抑えています。

@@ -17,8 +17,8 @@ manifest:
     - name: zmk-driver-paw3222
       remote: takagitshi
       repo-path: LisM-PAW3222-Driver
-      # Signed 12-bit deltas, paced reports, bounded acceleration, and dual Gesture bypass; pinned.
-      revision: d24c1b8edd3dc09c1535ed0e32e336319f8dc9fc
+      # Signed 12-bit deltas, paced reports, bounded acceleration, precision stage, and dual Gesture bypass; pinned.
+      revision: 616f9d2cdedca4c1e453f340d9fa7ffccfe57ac1
     - name: zmk-rgbled-widget
       remote: caksoylar
       # v0.3 support was split out to v0.3-branch; main now tracks ZMK main/Zephyr 4.x
