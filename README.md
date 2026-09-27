@@ -71,9 +71,9 @@ PAW3222ドライバーは、符号付き12bitのX/Y移動量と、MOTIONが続�
 [`takagitshi/LisM-PAW3222-Driver`](https://github.com/takagitshi/LisM-PAW3222-Driver)の検証済みcommitに固定しています。
 
 `force-awake`は初動遅延を減らす代わりに電池消費が増えるため、標準では有効化していません。
-右Centralの通常PointerだけはZENと同じ同一frame加速方式を使います。19mmトラックボール向けに
-低速域を0.5倍から開始し、LisM固有の8ms周期に合わせた速度17から加速、速度85で出力速度の
-傾きが最大gainへ達します。実効倍率は速度85で約1.5倍、170で約2.25倍となり、上限は3.0倍です。
+右Centralの通常PointerだけはZENと同じ同一frame加速方式を使います。19mmトラックボールで
+0.5倍開始が遅すぎた実機結果を受け、低速域を1.0倍へ戻しました。LisM固有の8ms周期に合わせた
+速度17から加速し、速度85で出力速度の傾きが最大gainへ達し、上限は3.0倍です。
 Scroll、Gesture 1、Gesture 2は加速を迂回してraw deltaを受け、左Peripheralの送信経路も
 従来どおりです。
 左右どちらのトラックボールも、センサーを即時読取りしつつ差分を8ms単位で集約し、

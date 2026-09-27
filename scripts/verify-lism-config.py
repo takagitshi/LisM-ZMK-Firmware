@@ -150,7 +150,7 @@ def main() -> int:
     )
     for fragment in (
         "report-interval-ms = <8>;", "pointer-acceleration;",
-        "pointer-acceleration-base-gain-milli = <500>;",
+        "pointer-acceleration-base-gain-milli = <1000>;",
         "pointer-acceleration-takeoff-speed = <17>;",
         "pointer-acceleration-full-speed = <85>;",
         "pointer-acceleration-max-gain-milli = <3000>;",
